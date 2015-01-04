@@ -1,4 +1,8 @@
-# Ubuntu
+# Ubuntu Cheat
+
+Ubuntu information and cheatsheets.
+
+Only Ubuntu / Debian specifics are considered: concepts that apply to most Linux distributions will not be included here.
 
 Most useful files:
 
