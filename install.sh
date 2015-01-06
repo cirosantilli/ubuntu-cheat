@@ -28,8 +28,8 @@
 
     # Dotfiles: only if not a shared home directory.
 
-      #git clone https://github.com/cirosantilli/dotfiles
-      #cd dotfiles
+      git clone https://github.com/cirosantilli/dotfiles
+      cd dotfiles
       #./install.sh
 
     # Editor
