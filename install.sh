@@ -468,7 +468,7 @@
 
       ## dosbox
 
-          #sudo aptitude install -y dosbox
+          sudo aptitude install -y dosbox
 
         # MANUAL: get the sound working
 
@@ -482,11 +482,11 @@
             #[midi]
             #midiconfig=14:0
 
-          #sudo aptitude install -y pmidi
+          sudo aptitude install -y pmidi
 
   ## editors
 
-      #sudo aptitude install -y eclipse
+      sudo aptitude install -y eclipse
 
     ## Libreoffice
 
@@ -494,7 +494,7 @@
 
       # Database editor:
 
-        #sudo aptitude install -y libreoffice-base
+        sudo aptitude install -y libreoffice-base
 
     ## Atom
 
