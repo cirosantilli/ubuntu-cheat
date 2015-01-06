@@ -670,7 +670,8 @@
         #sudo aptitude install openjdk-7-jre
         #sudo aptitude install icedtea-7-plugin
 
-      sudo aptitude install -y maven
+      #sudo aptitude install -y maven
+      sudo aptitude install -y maven2
 
     ## Python
 
