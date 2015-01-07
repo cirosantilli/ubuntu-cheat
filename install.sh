@@ -25,6 +25,11 @@
     # git
 
       sudo aptitude install -y git
+      sudo aptitude install -y curl
+      mkdir ~/bin
+      cd ~/bin
+      curl -O https://raw.github.com/git/git/master/contrib/diff-highlight/diff-highlight
+      chmod +x diff-highlight
 
     # Dotfiles: only if not a shared home directory.
 
@@ -139,6 +144,15 @@
         sudo aptitude update
         sudo aptitude install -y google-talkplugin
 
+      # Hipchat:
+
+        sudo su
+        echo "deb http://downloads.hipchat.com/linux/apt stable main" > \
+          /etc/apt/sources.list.d/atlassian-hipchat.list
+        wget -O - https://www.hipchat.com/keys/hipchat-linux.key | apt-key add -
+        apt-get update
+        apt-get install hipchat
+
     # X
 
       #sudo aptitude install -y xclip
@@ -153,7 +167,7 @@
 
       # Fundamental system configurations.
 
-      # sudo without password:
+      # sudo without password: commented out because only for single user machines:
 
         #sudo sh -c "echo '$(id -un) ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
 
@@ -162,7 +176,17 @@
         #sudo sh -c "printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=""\n'" >> /etc/default/grup"
         #sudo update-grub
 
-  if [ "$1" = "min" ]; then exit 0; fi
+      # Autohide launcher:
+
+        # http://askubuntu.com/questions/9865/how-can-i-configure-unitys-launcher-auto-hide-behavior
+
+      # Change esc and caps lock
+      # <http://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc>
+
+        sudo apt-get install dconf-tools
+        dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+
+  if [ "$1" = 'min' ]; then exit 0; fi
 
   ## Uncategorized
 
@@ -667,11 +691,16 @@
 
       # Openjdk version + firefox plugin:
 
-        #sudo aptitude install openjdk-7-jre
-        #sudo aptitude install icedtea-7-plugin
+        sudo aptitude install openjdk-7-jre
+        sudo aptitude install icedtea-7-plugin
 
-      #sudo aptitude install -y maven
-      sudo aptitude install -y maven2
+      # Maven 3:
+
+        sudo aptitude install -y maven
+
+      # Maven:
+
+        sudo aptitude install -y maven2
 
     ## Python
 
