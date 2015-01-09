@@ -728,36 +728,36 @@
 
     ## Node.js
 
-      # NVM install:
+      ## NVM
 
-        VERSION='0.10.26'
-        curl 'https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh' | sh
-        # WARNING: fails with `-eu`.
-        . "$HOME/.nvm/nvm.sh"
-        echo '. "$HOME/.nvm/nvm.sh"
-        nvm use "'"$VERSION"'" &>/dev/null
-        ' >> "$HOME/.bashrc"
-        nvm install "$VERSION"
+          VERSION='0.10.26'
+          curl 'https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh' | sh
+          # WARNING: fails with `-eu`.
+          . "$HOME/.nvm/nvm.sh"
+          echo '. "$HOME/.nvm/nvm.sh"
+          nvm use "'"$VERSION"'" &>/dev/null
+          ' >> "$HOME/.bashrc"
+          nvm install "$VERSION"
 
-      # Uninstall:
+        # After install, configure with:
 
-        #rm -rf -- "${HOME}/.nvm" "${HOME}/.npm" "${HOME}/.bower"
+          npm config set registry 'http://registry.npmjs.org/'
+
+        # Uninstall:
+
+          rm -rf -- "${HOME}/.nvm" "${HOME}/.npm" "${HOME}/.bower"
 
       # Package node: old. Use NVM.
 
-        #sudo aptitude install -y nodejs
+        sudo aptitude install -y nodejs
 
       # NPM: comes together with up to date nodes.
 
-      # Good up to date PPA:
+      # Good up to date PPA, but NVM is better:
 
-        #sudo add-apt-repository ppa:chris-lea/node.js
-        #sudo apt-get update
-        #sudo aptitude install -y nodejs
-
-      # After install, configure with:
-
-        npm config set registry 'http://registry.npmjs.org/'
+        sudo add-apt-repository ppa:chris-lea/node.js
+        sudo apt-get update
+        sudo aptitude install -y nodejs
 
     ## Go
 
