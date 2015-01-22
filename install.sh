@@ -174,7 +174,7 @@
 
       # Quick OS system choice and show kernel messages:
 
-        #sudo sh -c "printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=""\n'" >> /etc/default/grup"
+        #sudo sh -c "printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=\"\"\n' >> /etc/default/grub"
         #sudo update-grub
 
       # Autohide launcher:
