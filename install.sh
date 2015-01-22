@@ -4,7 +4,7 @@
 
 # Install the command survival kit:
 
-  #wget -O- https://raw.githubusercontent.com/cirosantilli/linux/master/ubuntu/install.sh | bash -s cli
+  #wget -O- https://raw.githubusercontent.com/cirosantilli/ubuntu-cheat/master/install.sh | bash -s cli
 
 # install GUI survival kit:
 
@@ -13,7 +13,14 @@
 # Non-automatable steps will be labelled with: `MANUAL`.
 # All effort is made to make them automatable.
 
-## SSH survival kit
+if [ $# -gt 0 ]; then
+  level="$1"
+  shift
+else
+  level='gui'
+fi
+
+## CLI survival kit
 
   # Packages.
 
@@ -31,14 +38,16 @@
     #cd dotfiles
     #./install.sh
 
-  # Editor
+      git clone https://github.com/cirosantilli/dotfiles
+      cd dotfiles
+      #./install.sh
 
     sudo aptitude install -y vim
     git clone https://github.com/gmarik/vundle.git "$HOME/.vim/bundle/vundle"
     # TODO fails from bash pipe becuase not TTY.
     #vim +PluginInstall +qall
 
-if [ "$1" = 'cli' ]; then exit 0; fi
+if [ "$level" = 'cli' ]; then exit 0; fi
 
 ## GUI survival kit
 
@@ -144,7 +153,7 @@ if [ "$1" = 'cli' ]; then exit 0; fi
       #sudo sh -c "printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=""\n'" >> /etc/default/grup"
       #sudo update-grub
 
-if [ "$1" = "min" ]; then exit 0; fi
+if [ "$level" = 'gui' ]; then exit 0; fi
 
 ## Uncategorized
 
@@ -466,7 +475,7 @@ if [ "$1" = "min" ]; then exit 0; fi
 
         #sudo aptitude install -y pmidi
 
-## editors
+          sudo aptitude install -y dosbox
 
     #sudo aptitude install -y eclipse
 
@@ -476,13 +485,11 @@ if [ "$1" = "min" ]; then exit 0; fi
 
     # Database editor:
 
-      #sudo aptitude install -y libreoffice-base
-
-  ## Atom
+      sudo aptitude install -y libreoffice-base
 
     # Requires: node, C++
 
-    # First install a recent node *as root*:
+      sudo aptitude install -y eclipse
 
       sudo add-apt-repository ppa:chris-lea/node.js
       sudo apt-get update
@@ -496,8 +503,6 @@ if [ "$1" = "min" ]; then exit 0; fi
       script/build # Creates application at $TMPDIR/atom-build/Atom
       sudo script/grunt install # Installs command to /usr/local/bin/atom
       script/grunt mkdeb # Generates a .deb package at $TMPDIR/atom-build
-
-## terminal emulators
 
     sudo aptitude install -y yakuake
 
@@ -626,31 +631,48 @@ if [ "$1" = "min" ]; then exit 0; fi
 
     # Java is a pain to make work sometimes.
 
-    # Make sure you get the latest version, or things may not work.
-
     # If things don't work, do the standard procedure: uninstall everything related to java, and try again.
 
     # To clear everything, first find all realted packages via:
 
       dpkg -l | grep -E '(java|openjdk|icedtea)' | grep -iv javascript | perl -F'/\s+/' -lane 'print $F[1]'
 
-    # and then do:
+    # And then do:
 
       #sudo aptitude purge $PKG
 
-    # Then install Oracle version (some things only work with it):
+    # Then install the version you need.
 
-      sudo add-apt-repository -y ppa:webupd8team/java
-      sudo aptitude update
-      sudo aptitude install -y oracle-java8-installer
-      sudo aptitude install -y oracle-java7-installer
+    # You can change between Java's with:
 
-    # This already comes with the browser plugin.
+      #sudo update-java-alternatives -s java-7-oracle
+      #sudo update-java-alternatives -s java-8-oracle
 
-    # Openjdk version + firefox plugin:
+    ## OpenJDK
 
-      #sudo aptitude install openjdk-7-jre
-      #sudo aptitude install icedtea-7-plugin
+        sudo aptitude install openjdk-6-jdk
+        sudo aptitude install openjdk-7-jdk
+
+      # OpenJDK 8 (released march 2014) is not available in 14.04.
+      # http://askubuntu.com/questions/464755/how-to-install-openjdk-8-on-14-04-lts
+
+    ## Oracle
+
+      # Some things only work with it...
+
+        sudo add-apt-repository -y ppa:webupd8team/java
+        sudo aptitude update
+        sudo aptitude install -y oracle-java7-installer
+        sudo aptitude install -y oracle-java8-installer
+
+    ##icedtea
+
+      # Openjdk version + firefox plugin.
+
+      # TODO necessary in 14.04?
+
+        #sudo aptitude install openjdk-7-jre
+        #sudo aptitude install icedtea-7-plugin
 
     sudo aptitude install -y maven
 
@@ -664,7 +686,8 @@ if [ "$1" = "min" ]; then exit 0; fi
 
   ## Ruby
 
-    # RVM and similar are the best method:
+      #sudo aptitude install -y maven
+      sudo aptitude install -y maven2
 
       curl -L 'https://get.rvm.io' | bash -s stable
       # WARNING: fails with `-eu`.
