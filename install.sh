@@ -31,6 +31,11 @@ fi
   # git
 
     sudo aptitude install -y git
+    sudo aptitude install -y curl
+    mkdir ~/bin
+    cd ~/bin
+    curl -O https://raw.github.com/git/git/master/contrib/diff-highlight/diff-highlight
+    chmod +x diff-highlight
 
   # Dotfiles: only if not a shared home directory.
 
@@ -64,8 +69,18 @@ if [ "$level" = 'cli' ]; then exit 0; fi
       # Automatically run upgrades without confirmation.
       sudo dpkg-reconfigure unattended-upgrades
 
-    # Usefull stuff that does not come by default or Canonical would have to pay royalties:
-
+      # Enable all sources: main, universe, restricted, multiverse and partner.
+      sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
+      sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
+      sudo aptitude update
+      sudo aptitude install -y apt-rdepends
+      sudo aptitude install -y apt-file
+      apt-file update
+      sudo aptitude install -y ppa-purge
+      # Automatically run upgrades without confirmation.
+      # TODO automatically accept ncurses confirmation
+      sudo dpkg-reconfigure unattended-upgrades
+      # Usefull stuff that does not come by default or Canonical would have to pay royalties:
       sudo aptitude install -y ubuntu-restricted-extras
 
   # GTK theme
@@ -108,6 +123,8 @@ if [ "$level" = 'cli' ]; then exit 0; fi
       # Ubuntu 12.02:
 
         #sudo aptitude install -y flashplugin-installer
+
+      # Ubuntu 14.04:
 
         sudo aptitude install -y adobe-flashplugin
 
@@ -153,9 +170,17 @@ if [ "$level" = 'cli' ]; then exit 0; fi
       #sudo sh -c "printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=""\n'" >> /etc/default/grup"
       #sudo update-grub
 
-if [ "$level" = 'gui' ]; then exit 0; fi
+    # Autohide launcher:
 
-## Uncategorized
+      # http://askubuntu.com/questions/9865/how-can-i-configure-unitys-launcher-auto-hide-behavior
+
+    # Change esc and caps lock
+    # <http://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc>
+
+      sudo apt-get install dconf-tools
+      dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+
+if [ "$level" = 'gui' ]; then exit 0; fi
 
 ## Misc
 
@@ -163,16 +188,19 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     sudo aptitude install -y uudeview
 
-  # mime messages
+  # Mime messages
 
     #sudo aptitude install -y mpack
+
+        #sudo sh -c "printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=\"\"\n' >> /etc/default/grub"
+        #sudo update-grub
 
   # Bitcoin
 
     sudo add-apt-repository -y ppa:bitcoin/bitcoin && sudo aptitude update
     sudo aptitude install -y bitcoin-qt
 
-## text
+## Text tools
 
     sudo aptitude install -y dos2unix
     sudo aptitude install -y pcregrep
@@ -188,7 +216,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y makepasswd
     sudo aptitude install -y puppet
 
-## printer
+## Printer
 
   # MANUAL
 
@@ -198,7 +226,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   # The guide shows you everything.
 
-## book
+## Book
 
   sudo aptitude install -y okular okular-extra-backends
   #sudo aptitude install -y fbreader
@@ -278,7 +306,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     sudo aptitude install -y inkscape
 
-## dict
+## Dictionary
 
   sudo aptitude install -y aspell
   sudo aptitude install -y aspell-fr
@@ -296,9 +324,9 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   sudo aptitude install -y sysstat
 
-## ocr
+## OCR
 
-  ## tesseract
+  ## Tesseract
 
       sudo aptitude install -y tesseract-ocr
 
@@ -318,9 +346,9 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     sudo aptitude install -y cuneiform
 
-## video
+## Video
 
-  # handbreak
+  # Handbreak
 
     sudo add-apt-repository -y ppa:stebbins/handbrake-releases
     sudo aptitude install -y handbrake-cli
@@ -364,15 +392,15 @@ if [ "$level" = 'gui' ]; then exit 0; fi
         make
         sudo make install
 
-## compression
+## Compression
 
     sudo aptitude install -y zip unzip
 
-  #7 zip:
+  # 7 zip:
 
     sudo aptitude install -y p7zip-full
 
-  #.ace files
+  # .ace files
 
     #sudo aptitude install -y unace
 
@@ -397,7 +425,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     sudo aptitude install -y file-roller
 
-## game
+## Game
 
   ## getdeb
 
@@ -430,13 +458,13 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     #sudo aptitude install -y supertuxkart
 
-  ## emulator
+  ## Emulator
 
     ## NES
 
       sudo aptitude install -y fceux
 
-    ## SNES.
+    ## SNES
 
       # 32 bit only:
 
@@ -512,7 +540,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude update
     sudo aptitude install -y finalterm
 
-## program
+## Programming
 
     sudo aptitude install -y ant
     sudo aptitude install -y automake
@@ -527,7 +555,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y libtool
     sudo aptitude install -y m4
 
-  ## version control
+  ## Version control
 
       # Very outdated:
       sudo aptutide install -y tig
@@ -583,7 +611,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
       sudo aptitude install -y libqt4-dev
       sudo aptitude install -y qt4-demos
 
-    ## gtk
+    ## GTK
 
         sudo aptitude install -y libgtk-3-dev
         sudo aptitude install -y libgtk-3-doc
@@ -671,9 +699,14 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       # TODO necessary in 14.04?
 
-        #sudo aptitude install openjdk-7-jre
-        #sudo aptitude install icedtea-7-plugin
+        sudo aptitude install openjdk-7-jre
+        sudo aptitude install icedtea-7-plugin
 
+      # Maven 3:
+
+        sudo aptitude install -y maven
+
+<<<<<<< HEAD
     sudo aptitude install -y maven
 
   ## Python
@@ -688,6 +721,11 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       #sudo aptitude install -y maven
       sudo aptitude install -y maven2
+=======
+      # Maven:
+
+        sudo aptitude install -y maven2
+>>>>>>> 3b90b41361964e954f61d95b1669627eb53ce998
 
       curl -L 'https://get.rvm.io' | bash -s stable
       # WARNING: fails with `-eu`.
@@ -722,6 +760,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       #sudo aptitude install -y nodejs
 
+<<<<<<< HEAD
     # NPM: comes together with up to date nodes.
 
     # Good up to date PPA:
@@ -751,6 +790,38 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     # Not compatible with lua5.2: already requires lua5.1:
 
       #sudo aptitude install -y luarocks
+=======
+      ## NVM
+
+          VERSION='0.10.26'
+          curl 'https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh' | sh
+          # WARNING: fails with `-eu`.
+          . "$HOME/.nvm/nvm.sh"
+          echo '. "$HOME/.nvm/nvm.sh"
+          nvm use "'"$VERSION"'" &>/dev/null
+          ' >> "$HOME/.bashrc"
+          nvm install "$VERSION"
+
+        # After install, configure with:
+
+          npm config set registry 'http://registry.npmjs.org/'
+
+        # Uninstall:
+
+          rm -rf -- "${HOME}/.nvm" "${HOME}/.npm" "${HOME}/.bower"
+
+      # Package node: old. Use NVM.
+
+        sudo aptitude install -y nodejs
+
+      # NPM: comes together with up to date nodes.
+
+      # Good up to date PPA, but NVM is better:
+
+        sudo add-apt-repository ppa:chris-lea/node.js
+        sudo apt-get update
+        sudo aptitude install -y nodejs
+>>>>>>> 3b90b41361964e954f61d95b1669627eb53ce998
 
     # TODO even if installed alone some packages installed with it fail.
 
@@ -868,12 +939,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     sudo aptitude install -y nasm
 
-## fs
-
-    sudo aptitude install -y gparted
-    sudo aptitude install -y inotify-tools
-
-## net
+## Net
 
     sudo aptitude install -y apache2
     sudo aptitude install -y libapache2-mod-fastcgi
@@ -928,7 +994,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     # Login: 'root'. password: what you entered at installation.
 
-  ## phantomjs
+  ## Phantomjs
 
     # Very outdated:
 
@@ -965,7 +1031,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
       sudo apt-get update
       sudo apt-get install tor-browser
 
-  ## db
+  ## DB
 
     # MySQL:
 
@@ -1016,7 +1082,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       sudo aptitude install -y mongodb
 
-  ## mail
+  ## Mail
 
       sudo aptitude install -y mutt
       sudo aptitude install -y ssmtp
@@ -1025,7 +1091,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       #sudo aptitude install -y postfix
 
-## desktop
+## Desktop
 
       sudo aptitude install -y xbacklight
       sudo aptitude install -y xsel
@@ -1071,7 +1137,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     cd ltunify
     make install-home
 
-  ## desktop system
+  ## Desktop system
 
     # Gnome shell:
 
@@ -1109,6 +1175,17 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y lfm
     sudo aptitude install -y mc
     sudo aptitude install -y vifm
+
+## Communication
+
+  # Hipchat:
+
+    sudo su
+    echo "deb http://downloads.hipchat.com/linux/apt stable main" > \
+      /etc/apt/sources.list.d/atlassian-hipchat.list
+    wget -O - https://www.hipchat.com/keys/hipchat-linux.key | apt-key add -
+    apt-get update
+    apt-get install hipchat
 
 ## File sharing
 
