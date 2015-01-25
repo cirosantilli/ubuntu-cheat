@@ -690,8 +690,19 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
         sudo add-apt-repository -y ppa:webupd8team/java
         sudo aptitude update
+        echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+        echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
         sudo aptitude install -y oracle-java7-installer
         sudo aptitude install -y oracle-java8-installer
+
+      # Maven 3:
+
+        sudo aptitude install -y maven
+
+
+      # Maven 2:
+
+        sudo aptitude install -y maven2
 
     ##icedtea
 
@@ -702,13 +713,6 @@ if [ "$level" = 'gui' ]; then exit 0; fi
         sudo aptitude install openjdk-7-jre
         sudo aptitude install icedtea-7-plugin
 
-      # Maven 3:
-
-        sudo aptitude install -y maven
-
-<<<<<<< HEAD
-    sudo aptitude install -y maven
-
   ## Python
 
     # pip:
@@ -718,14 +722,6 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y gunicorn
 
   ## Ruby
-
-      #sudo aptitude install -y maven
-      sudo aptitude install -y maven2
-=======
-      # Maven:
-
-        sudo aptitude install -y maven2
->>>>>>> 3b90b41361964e954f61d95b1669627eb53ce998
 
       curl -L 'https://get.rvm.io' | bash -s stable
       # WARNING: fails with `-eu`.
@@ -760,7 +756,6 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       #sudo aptitude install -y nodejs
 
-<<<<<<< HEAD
     # NPM: comes together with up to date nodes.
 
     # Good up to date PPA:
@@ -790,38 +785,6 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     # Not compatible with lua5.2: already requires lua5.1:
 
       #sudo aptitude install -y luarocks
-=======
-      ## NVM
-
-          VERSION='0.10.26'
-          curl 'https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh' | sh
-          # WARNING: fails with `-eu`.
-          . "$HOME/.nvm/nvm.sh"
-          echo '. "$HOME/.nvm/nvm.sh"
-          nvm use "'"$VERSION"'" &>/dev/null
-          ' >> "$HOME/.bashrc"
-          nvm install "$VERSION"
-
-        # After install, configure with:
-
-          npm config set registry 'http://registry.npmjs.org/'
-
-        # Uninstall:
-
-          rm -rf -- "${HOME}/.nvm" "${HOME}/.npm" "${HOME}/.bower"
-
-      # Package node: old. Use NVM.
-
-        sudo aptitude install -y nodejs
-
-      # NPM: comes together with up to date nodes.
-
-      # Good up to date PPA, but NVM is better:
-
-        sudo add-apt-repository ppa:chris-lea/node.js
-        sudo apt-get update
-        sudo aptitude install -y nodejs
->>>>>>> 3b90b41361964e954f61d95b1669627eb53ce998
 
     # TODO even if installed alone some packages installed with it fail.
 
