@@ -184,8 +184,15 @@
       # Change esc and caps lock
       # <http://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc>
 
-        sudo apt-get install dconf-tools
+        sudo aptitude install -y dconf-tools
         dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+
+      # MANUAL:
+      # Make the scrollbar more visible:
+      # http://askubuntu.com/questions/103246/how-to-change-the-color-of-the-scroll-bar
+      # https://bugs.launchpad.net/ubuntu/+source/guake/+bug/1370762
+
+        sudo aptitude install -y gnome-color-chooser
 
   if [ "$1" = 'min' ]; then exit 0; fi
 
