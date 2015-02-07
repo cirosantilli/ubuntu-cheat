@@ -723,8 +723,19 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   ## Ruby
 
-      curl -L 'https://get.rvm.io' | bash -s stable
-      # WARNING: fails with `-eu`.
+    # Old install: still outdated on the README.
+
+      #curl -L 'https://get.rvm.io' | bash -s stable
+
+    # New install:
+
+      cd /tmp
+      gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+      \curl -O https://raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer
+      \curl -O https://raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer.asc
+      gpg --verify rvm-installer.asc
+      bash rvm-installer stable
+
       . "$HOME/.rvm/scripts/rvm"
       rvm install '2.1.1'
       # Logout, login, and works for all shells.
@@ -1162,7 +1173,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   ## Dropbox
 
-    # Also installs dropbox, not just nautilus extension.
+    # Also installs Dropbox, not just nautilus extension.
 
       sudo aptitude install -y nautilus-dropbox
 
