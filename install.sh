@@ -2,7 +2,7 @@
 
 # Do all automatable steps to install useful stuff in Ubuntu.
 
-# Install the command survival kit:
+# Install the CLI survival kit:
 
   #wget -O- https://raw.githubusercontent.com/cirosantilli/ubuntu-cheat/master/install.sh | bash -s cli
 
@@ -13,7 +13,7 @@
 # Non-automatable steps will be labelled with: `MANUAL`.
 # All effort is made to make them automatable.
 
-if [ $# -gt 0 ]; then
+if [ "$#" -gt 0 ]; then
   level="$1"
   shift
 else
@@ -22,13 +22,13 @@ fi
 
 ## CLI survival kit
 
-  # Packages.
+  # Packages
 
     sudo apt-get update
     sudo apt-get install -y aptitude
     sudo aptitude update
 
-  # git
+  # Git
 
     sudo aptitude install -y git
     sudo aptitude install -y curl
@@ -39,16 +39,14 @@ fi
 
   # Dotfiles: only if not a shared home directory.
 
-    #git clone https://github.com/cirosantilli/dotfiles
-    #cd dotfiles
-    #./install.sh
+    sudo gem install homesick
+    homesick clone cirosantilli/dotfiles
+    homsick symlink
 
-      git clone https://github.com/cirosantilli/dotfiles
-      cd dotfiles
-      #./install.sh
+  # Vim plugins
 
     sudo aptitude install -y vim
-    git clone https://github.com/gmarik/vundle.git "$HOME/.vim/bundle/vundle"
+    git clone https://github.com/gmarik/Vundle.vim "$HOME/.vim/bundle/Vundle"
     # TODO fails from bash pipe becuase not TTY.
     #vim +PluginInstall +qall
 
@@ -56,18 +54,7 @@ if [ "$level" = 'cli' ]; then exit 0; fi
 
 ## GUI survival kit
 
-  ## package management
-
-      # Enable all sources: main, universe, restricted, multiverse and partner.
-      sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
-      sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
-      sudo aptitude update
-      sudo aptitude install -y apt-rdepends
-      sudo aptitude install -y apt-file
-      apt-file update
-      sudo aptitude install -y ppa-purge
-      # Automatically run upgrades without confirmation.
-      sudo dpkg-reconfigure unattended-upgrades
+  ## Package management
 
       # Enable all sources: main, universe, restricted, multiverse and partner.
       sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
@@ -149,7 +136,6 @@ if [ "$level" = 'cli' ]; then exit 0; fi
 
   # X
 
-    #sudo aptitude install -y xclip
     sudo aptitude install -y xsel
     sudo aptitude install -y wmctrl
 
@@ -177,8 +163,15 @@ if [ "$level" = 'cli' ]; then exit 0; fi
     # Change esc and caps lock
     # <http://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc>
 
-      sudo apt-get install dconf-tools
+      sudo apt-get install -y dconf-tools
       dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+
+    # MANUAL:
+    # Make the scrollbar more visible:
+    # http://askubuntu.com/questions/103246/how-to-change-the-color-of-the-scroll-bar
+    # https://bugs.launchpad.net/ubuntu/+source/guake/+bug/1370762
+
+      sudo aptitude install -y gnome-color-chooser
 
 if [ "$level" = 'gui' ]; then exit 0; fi
 
@@ -209,6 +202,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     sudo aptitude install -y acct
     sudo aptitude install -y finger
+    sudo aptitude install -y gksu
     # Multiverse.
     sudo aptitude install -y gddrescue
     sudo aptitude install -y finger
@@ -248,7 +242,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   # Texlive 2009 full: latex
 
-    #sudo aptitude install -y texlive-full
+    sudo aptitude install -y texlive-full
 
   # Texlive 2013 full:
 
@@ -557,8 +551,14 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   ## Version control
 
-      # Very outdated:
+    # Git:
+
+      # Very outdated
+      sudo aptutide install -y git-gui
+      sudo aptutide install -y gitk
       sudo aptutide install -y tig
+
+    # Others:
 
       sudo aptitude install -y bzr
       sudo aptitude install -y cvs
@@ -890,8 +890,6 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     # Glasgw Haskell Compiler, libs, package manager, etc. Convenient.
 
       sudo aptitude install -y haskell-platform
-      echo ''
-
       printf '\nexport PATH="$PATH:$HOME/.cabal/bin"\n' >> "$HOME/.profile"
 
       # Because Ubuntu's default `.profile` sources `.bashrc` which does `[ -z "$PS1" ]`,
@@ -1063,17 +1061,17 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     # Conflicts with ssmtp:
 
-      #sudo aptitude install -y postfix
+      sudo aptitude install -y postfix
 
 ## Desktop
 
-      sudo aptitude install -y xbacklight
-      sudo aptitude install -y xsel
       sudo aptitude install -y wmctrl
+      sudo aptitude install -y xbacklight
+      sudo aptitude install -y xclip
       sudo aptitude install -y xdotool
 
-      #sudo apt-add-repository ppa:cdekter/ppa
-      #sudo aptitude install -y autokey-gtk
+      sudo apt-add-repository ppa:cdekter/ppa
+      sudo aptitude install -y autokey-gtk
 
     # Modify GTK theme:
 
@@ -1081,10 +1079,10 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       sudo aptitude install -y compizconfig-settings-manager
 
-    #sudo aptitude install zenity
+    sudo aptitude install zenity
 
-    #sudo add-apt-repository ppa:webupd8team/y-ppa-manager && sudo aptitude update
-    #sudo aptitude install -y yad
+    sudo add-apt-repository ppa:webupd8team/y-ppa-manager && sudo aptitude update
+    sudo aptitude install -y yad
 
     sudo aptitude install -y alarm-clock-applet
     # GNOME tweak tool:
@@ -1201,14 +1199,24 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   sudo aptitude install -y samba
 
+## Graphics card
+
 ## GPU
 
-  # Nvidia
+  # To install drivers, consider using the "Additional drivers" GUI.
+
+  ## Nvidia
 
     sudo aptitude install -y nvidia-319
     sudo aptitude install -y nvidia-settings-319
     sudo aptitude install -y nvidia-prime
     sudo aptitude install -y nvidia-opencl-dev
+
+  ## ATI
+
+    # AMD Catalist
+
+      sudo aptitude install -y amdcccle
 
 ## Encoding
 
