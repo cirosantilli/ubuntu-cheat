@@ -4,10 +4,15 @@ Ubuntu information and cheatsheets.
 
 Only Ubuntu / Debian specifics are considered: concepts that apply to most Linux distributions will not be included here.
 
-Most useful files:
+- [install.sh](install.sh): installation procedures for tons of programs
+    - [apt-get.md](apt-get.md)
+    - [apt-file](apt-file.md)
+    - [dpkg](dpkg.md)
+- [command-not-found](command-not-found.md)
 
-- [install.sh](install.sh): installation procedures for tons of programs.
-- [apt-get.md](apt-get.md): information on Ubuntu's packages and related tools.
+## WIP
+
+- [debconf](debconf.md)
 
 ## Sources
 
