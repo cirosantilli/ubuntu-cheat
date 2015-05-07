@@ -20,20 +20,18 @@ The difference between Main, Universe, Restricted and Multiverse can be visualiz
 | Supported   | Main          | Restricted        |
 | Unsupported | Universe      | Multiverse        |
 
-The list of all above packages can be found at: <http://packages.ubuntu.com/>
+The list of all above packages can be found at: <http://packages.ubuntu.com/>. Searchable from: <http://packages.ubuntu.com/name>
 
 In addition, there are also the `partner` sources.
 
 On new installs, Main and Restricted sources are enabled by default.
 
-By default, only Main sources are enabled. Enable Universe with:
-
-    sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) universe" 
-
-Enable everything with:
+By default, only Main sources are enabled. Enable everything with:
 
     sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
     sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
+
+### Universe
 
 PPAs vs Universe: universe passes some selection form Canonical, PPAs don't.
 
@@ -41,7 +39,7 @@ PPAs vs Universe: universe passes some selection form Canonical, PPAs don't.
 
 List of pre-installed packages perversion: <http://askubuntu.com/questions/50077/how-to-get-a-list-of-preinstalled-packages>
 
-12.04.4 at <http://releases.ubuntu.com/precise/ubuntu-12.04.4-desktop-i386.manifest> but may be removed once a new one comes.
+12.04.4 at <http://releases.ubuntu.com/precise/ubuntu-12.04.4-desktop-i386.manifest>. Remember that `i386` is the 32 bit and `amd64` the 64 bit architectures, both used by both Intel and AMD processors.
 
 For other versions see the parent URL.
 

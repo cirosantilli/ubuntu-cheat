@@ -4,34 +4,24 @@ Ubuntu information and cheatsheets.
 
 Only Ubuntu / Debian specifics are considered: concepts that apply to most Linux distributions will not be included here.
 
-- [install.sh](install.sh): installation procedures for tons of programs
-    - [apt-get.md](apt-get.md)
-    - [apt-file](apt-file.md)
-    - [dpkg](dpkg.md)
-- [command-not-found](command-not-found.md)
+1.  [install.sh](install.sh): installation procedures for tons of programs
+    1. [apt-get.md](apt-get.md)
+    1. [apt-file](apt-file.md)
+    1. [dpkg](dpkg.md)
+    1. [vrms](vrms.md)
+1.  [command-not-found](command-not-found.md)
+1.  [Ubuntu One](ubuntu-one.md)
+1.  [Bibliography](bibliography.md)
 
 ## WIP
 
-- [debconf](debconf.md)
-
-## Sources
-
--   <http://www.ubuntu.com/>: central official resource that links to all
-
--   <http://askubuntu.com/>
-
-    Stack Exchange for Ubuntu. Sometimes you get fast answers, sometimes not.
-
--   <https://bugs.launchpad.net/ubuntu/>: official bug tracker.
-
-    Includes bugs on the officially supported packages, e.g.: restricted:
-    <https://bugs.launchpad.net/ubuntu/+source/nvidia-graphics-drivers-304>
+1. [debconf](debconf.md)
 
 ## Introduction
 
 Ubuntu is likely to be one of the most used distros as of 2014-03:
 
-	http://distrowatch.com/dwres.php?resource=popularity
+    http://distrowatch.com/dwres.php?resource=popularity
 
 Ubuntu is maintained by the company Canonical which gets money by offering maintenance,
 
@@ -57,16 +47,16 @@ Important implications:
 
 -   many key package manager programs are the same:
 
-	- `dpkg` for packages
-	- `upstart` for init
+    - `dpkg` for packages
+    - `upstart` for init
 
 -   special directories conventions are the same:
 
-	- `/media` for mounting
+    - `/media` for mounting
 
 ## Open app without global menu
 
-	env UBUNTU_MENUPROXY=0 golly
+    env UBUNTU_MENUPROXY=0 golly
 
 ## Configurations
 
@@ -74,14 +64,13 @@ Important implications:
 
 ### Get current Ubuntu version
 
-	lsb_release -a | grep Release
+    lsb_release -a | grep Release
 
 ### Upgrade Ubuntu to newer version
 
-	sudo aptitude install -y update-manager-core
-	sudo do-release-upgrade
-	sudo aptitude update && sudo aptitude upgrade
-
+    sudo aptitude install -y update-manager-core
+    sudo do-release-upgrade
+    sudo aptitude update && sudo aptitude upgrade
 
 ### ubuntu-tweak
 

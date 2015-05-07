@@ -201,6 +201,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 ## sysadmin
 
     sudo aptitude install -y acct
+    sudo aptitude install -y vrms
     sudo aptitude install -y finger
     sudo aptitude install -y gksu
     # Multiverse.
@@ -541,6 +542,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y bison
     sudo aptitude install -y build-essential
     sudo aptitude install -y cmake
+    sudo aptitude install -y cscope
     sudo aptitude install -y doxygen
     sudo aptitude install -y doxygen-doc
     sudo aptitude install -y exuberant-ctags
