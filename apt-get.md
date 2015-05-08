@@ -1,6 +1,6 @@
 # apt-get
 
-`apt-get`, `dpkg`, `aptitude`, Ubuntu official repositories, PPAs and related concepts.
+`apt-get`, `aptitude`, Ubuntu official repositories, PPAs and related concepts.
 
 ## Source types
 
@@ -101,7 +101,7 @@ Metapackages are packages that contain no source code of their own, but have sev
 
 They serve as a collection of software that is useful when installed together.
 
-Examples: `texlive-full` (*lots* ot latex packages), several desktop environments, etc.
+Examples: `texlive-full` (*lots* of latex packages), several desktop environments, etc.
 
 It seems that `dpkg` without additional info has no way to tell the difference between packages installed as dependencies of a metadata and packages explicitly installed: it is as if you had written if all by yourself on the command line.
 
@@ -312,12 +312,6 @@ Very likely to clash with other installed versions of the package.
 
 It is not simple to install to current user without root: <http://askubuntu.com/questions/339/how-can-i-install-a-package-without-root-access>
 
-### build-deps
-
-Install build dependencies for a package.
-
-    sudo aptitude build-deps $PKG
-
 ### upgrade installed packages
 
 Move to next version
@@ -365,15 +359,17 @@ Install all build dependencies for a package.
 
 Great when you are going to compile it from source to get the latest version.
 
-    sudo apt-get build-dep $PKG
+    sudo apt-get build-dep "$pkg"
 
-### download
+### source
 
-Download a `.deb` without installing it:
+Download the source version to the current directory:
 
-    dpkg-download $PKG
-
-<http://askubuntu.com/questions/47865/how-do-i-use-apt-get-to-only-download-packages>
+    pkg='liblapack-dev'
+    apt-get source "$pkg"
+    sudo apt-get build-dep "$pkg"
+    cd "$pkg"version
+    debuild -us -uc
 
 ## Combos
 
@@ -389,7 +385,3 @@ To correct dependency problems try:
     suto apt-get install $PKG
     Also, if the package comes from a ppa, remove the ppa and try again
     Sources list. does not include ppas
-
-## Create packages
-
-TODO!

@@ -5,9 +5,12 @@ Ubuntu information and cheatsheets.
 Only Ubuntu / Debian specifics are considered: concepts that apply to most Linux distributions will not be included here.
 
 1.  [install.sh](install.sh): installation procedures for tons of programs
+    1. [deb](deb.md)
     1. [apt-get.md](apt-get.md)
     1. [apt-file](apt-file.md)
     1. [dpkg](dpkg.md)
+    1. [apt-cache](apt-cache.md)
+    1. [apt-rdepends](apt-rdepends.md)
     1. [vrms](vrms.md)
 1.  [command-not-found](command-not-found.md)
 1.  [Ubuntu One](ubuntu-one.md)
@@ -16,6 +19,7 @@ Only Ubuntu / Debian specifics are considered: concepts that apply to most Linux
 ## WIP
 
 1. [debconf](debconf.md)
+1. [debuild](debuild.md)
 
 ## Introduction
 

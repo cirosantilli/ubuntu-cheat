@@ -29,30 +29,8 @@ Shows files in package `p`:
     p=
     apt-file show "$p"
 
-## Get info on packages before installing them
+## Package naming conventions
 
-List package dependencies
-
-    apt-cache depends $PKG
-
-Find who depends on `$PKG` (reverse dependencies):
-
-    sudo apt-rdepends -r $PKG
-
-Get basic information about a package:
-
-    apt-cache show $PKG
-
-Get detailed information about a package:
-
-    apt-cache showpkg $PKG
-
-    sudo aptitude install debtags
-    debtags tag ls $PKG
-
-Package naming conventions:
-
-    -dev:  headers and libs, no docs
-    -doc:  documentation
-    -test: tests
-
+`-dev` sufix: headers and libs, no docs
+`-doc` sufix: documentation
+`-test` sufix: tests

@@ -1,7 +1,6 @@
 # dpkg
 
-Lower level tool that `apt-get`: capable of listing, installing and removing individual
-`.deb` packages, but not of managing dependencies.
+Lower level tool that `apt-get`: capable of listing, installing and removing individual `.deb` packages, but not of managing dependencies.
 
 `apt-get` is a front-end for `dpkg`
 
@@ -28,11 +27,14 @@ Remove previously installed package:
 
 You don't need the `.deb` to uninstall it.
 
-Unpack a `.deb` file:
-
-    dpkg-deb -R $PKG.deb .
-
-Automatically install updates without asking for confirmation:
-<http://askubuntu.com/questions/9/how-do-i-enable-automatic-updates>
+Automatically install updates without asking for confirmation: <http://askubuntu.com/questions/9/how-do-i-enable-automatic-updates>
 
     sudo dpkg-reconfigure unattended-upgrades
+
+## x
+
+Extract files to be installed by this package to a directory named `a/`:
+
+	dpkg -x a.deb a
+
+Does not extract control files.

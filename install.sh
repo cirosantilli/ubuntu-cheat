@@ -201,7 +201,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 ## sysadmin
 
     sudo aptitude install -y acct
-    sudo aptitude install -y vrms
+    sudo aptitude install -y devscripts
     sudo aptitude install -y finger
     sudo aptitude install -y gksu
     # Multiverse.
@@ -210,6 +210,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y htop
     sudo aptitude install -y makepasswd
     sudo aptitude install -y puppet
+    sudo aptitude install -y vrms
 
 ## Printer
 
