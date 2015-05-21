@@ -1,4 +1,4 @@
-# Ubuntu Cheat
+# Ubuntu Cheat ![logo](logo.png)
 
 Ubuntu information and cheatsheets.
 
