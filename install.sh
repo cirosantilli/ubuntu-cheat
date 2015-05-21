@@ -212,6 +212,14 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y puppet
     sudo aptitude install -y vrms
 
+    ## Filesystem
+
+        sudo aptitude install -y bindfs
+
+    ## Ubuntu specific
+
+        sudo aptitude install -y debootstrap
+
 ## Printer
 
   # MANUAL

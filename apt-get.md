@@ -2,113 +2,6 @@
 
 `apt-get`, `aptitude`, Ubuntu official repositories, PPAs and related concepts.
 
-## Source types
-
-The following are the major sources of software:
-
-- Main
-- Restricted
-- Universe
-- Multiverse
-- Partner
-- PPAs
-
-The difference between Main, Universe, Restricted and Multiverse can be visualized as:
-
-|             | Free software | Non-free software |
-|-------------|---------------|-------------------|
-| Supported   | Main          | Restricted        |
-| Unsupported | Universe      | Multiverse        |
-
-The list of all above packages can be found at: <http://packages.ubuntu.com/>. Searchable from: <http://packages.ubuntu.com/name>
-
-In addition, there are also the `partner` sources.
-
-On new installs, Main and Restricted sources are enabled by default.
-
-By default, only Main sources are enabled. Enable everything with:
-
-    sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) main universe restricted multiverse"
-    sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
-
-### Universe
-
-PPAs vs Universe: universe passes some selection form Canonical, PPAs don't.
-
-### Pre-installed
-
-List of pre-installed packages perversion: <http://askubuntu.com/questions/50077/how-to-get-a-list-of-preinstalled-packages>
-
-12.04.4 at <http://releases.ubuntu.com/precise/ubuntu-12.04.4-desktop-i386.manifest>. Remember that `i386` is the 32 bit and `amd64` the 64 bit architectures, both used by both Intel and AMD processors.
-
-For other versions see the parent URL.
-
-### Main
-
-Officially supported software. Full list for 12.04 + their recommendations + the files they provide: <http://packages.ubuntu.com/precise/allpackages>. Not possible to see the file contents.
-
-Not all of those packages come pre-installed, they can be installed directly with `apt-get` since their source is already enabled by default.
-
-### Partner
-
-Support is not given by Canonical, but by the company who produces the software.
-
-Notable examples: Flash, Skype.
-
-<http://askubuntu.com/questions/456345/what-is-the-difference-between-multiverse-and-partner-sources>
-
-Enable:
-
-    sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
-
-## Software version
-
-For stability and QA, there is only a fixed version of each software per Ubuntu version, except for occasional:
-
-- updates
-- security
-- backports
-
-updates. Those updates normally only touch critical components, and even after an update it is still possible that a more recent version of Ubuntu will have a more recent version of the software.
-
-Therefore, the most flexible way of getting updated version of software are PPAs.
-
-### Security
-
-Hot-fixes that must be updated quickly.
-
-### Updates
-
-Simply updates, not yet in another version.
-
-Enabled by default.
-
-### Proposed
-
-Proposed for updates, but not yet tested.
-
-Disabled by default.
-
-### Backports
-
-Updates that come from a new release and were enabled to older systems.
-
-Enabled by default.
-
-## Metapackages
-
-Metapackages are packages that contain no source code of their own, but have several dependencies
-
-They serve as a collection of software that is useful when installed together.
-
-Examples: `texlive-full` (*lots* of latex packages), several desktop environments, etc.
-
-It seems that `dpkg` without additional info has no way to tell the difference between packages installed as dependencies of a metadata and packages explicitly installed: it is as if you had written if all by yourself on the command line.
-
-It seems that aptitude can store this information, and uninstall metapackages in one go: *major* reason for using aptitude!
-
-There seems to be no way of telling
-
 ## Transitional packages
 
 TODO <http://askubuntu.com/questions/20377/what-exact-purpose-have-transitional-packages>
@@ -125,6 +18,12 @@ Of just with the `-dev` suffix:
 
 	nvidia-cuda-dev
 
+## Package naming conventions
+
+`-dev` suffix: headers and libs, no docs
+`-doc` suffix: documentation
+`-test` suffix: tests
+
 ## apt-get vs aptitude vs synaptic
 
 Summary: **always** use `aptitude` instead of `apt-get`!
@@ -136,118 +35,6 @@ Reason: on remove aptitude removes all dependencies which were not installed exp
 Synaptic has a GUI interface, but less options.
 
 Aptitude seems to be more powerful than apt-get
-
-## PPA
-
-PPAs are sources of software.
-
-To add a new source you must do two things:
-
-- add the PPA key to the trusted PPA list
-- add the PPA to the PPA list
-
-### Find PPAs
-
-Launchpad <https://launchpad.net> is the main source for PPAs and the site is maintained by Ubuntu. Look there first.
-
-Next Google it.
-
-### List PPAs
-
-Default sources:
-
-    cat /etc/apt/sources.list
-
-PPAs:
-
-    ls -1 /etc/apt/sources.list.d/
-
-### Keys
-
-In order to trust a PPA, you have to add its key.
-
-This is called a *digital signature*.
-
-It is meant to ensure that:
-
-- you received the data from who you think you did
-- the data was not modified in its way to you
-
-Keys are managed by GPG, and kept in:
-
-	gpg /etc/apt/trustdb.gpg
-
-So if you want to really understand things, you must first understand gpg
-
-List keys easily:
-
-    apt-key list
-
-add keys:
-
-    sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5044912E
-
-`wget`:
-
-    wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
-
-### add-apt-repository
-
-Add key to PPAs in Launchpad.
-
-`python-software-properties` package.
-
-Launchpad is maintained by Canonical, and it is easy to Install/remove packages from them with `add-apt-repository`.
-
-    sudo add-apt-repository ppa:deluge-team/ppa
-    sudo aptitude update
-
-    - `deluge-team` is an username
-    - ppa is an specific ppa from that username
-
-`-y`: don't ask for confirmation:
-
-    sudo add-apt-repository -y ppa:user/repo
-
-Remove sources:
-
-You could remove them manually, but there it is better to do that with `ppa-purge`:
-
-    sudo aptitude install ppa-purge
-    sudo ppa-purge ppa:matthaeus123/mrw-gimp-svn
-
-Not sure what is the weight of:
-
-    sudo add-apt-repository --remote
-
-### PPAs outside launchpad
-
-The best I could find for now to add was the GetDeb way:
-
-    wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
-    sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu quantal-getdeb games" >> /etc/apt/sources.list.d/getdeb.list'
-
-And to remove:
-
-    sudo rm /etc/apt/sources.list.d/getdeb.list
-    apt-key list | less
-    Pub   4096R/46D7E7CF 2009-05-15
-    ^^^^^^^^
-    KEY
-    KEY=
-    sudo apt-key del "$KEY"
-
-Keep a list of all PPAs added like this somewhere.
-
-If you want to uninstall, you will remember the filename to remove.
-
-### apt-cache
-
-Searches package name and descriptions on the web:
-
-    apt-cache search "$PATTERN"
-
-Pattern is a POSIX ERE.
 
 ## aptitude
 
@@ -368,8 +155,10 @@ Download the source version to the current directory:
     pkg='liblapack-dev'
     apt-get source "$pkg"
     sudo apt-get build-dep "$pkg"
-    cd "$pkg"version
+    cd "$pkg"*
     debuild -us -uc
+
+It is also possible to fetch the sources with 
 
 ## Combos
 

@@ -1,6 +1,10 @@
 # apt-file
 
-Search for and list package files. **very** useful to know: which package provides a missing file like a `bin/name` or `include/name.h`?
+Search files in packages that are not installed.
+
+For installed packages, `dpkg` is usually the tool of choice.
+
+**very** useful to know: which package provides a missing file like a `bin/name` or `include/name.h`?
 
     sudo aptitude install apt-file
     apt-file update
@@ -22,15 +26,12 @@ Combo: search for an executable called `a2x`:
 
     apt-file search bin/a2x
 
-## Show
+## list
+
+## show
 
 Shows files in package `p`:
 
-    p=
-    apt-file show "$p"
+    apt-file list "hello"
 
-## Package naming conventions
-
-`-dev` sufix: headers and libs, no docs
-`-doc` sufix: documentation
-`-test` sufix: tests
+For installed package, use `dpkg -L`.

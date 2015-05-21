@@ -8,6 +8,8 @@ List package dependencies
 
     apt-cache depends $PKG
 
+The pattern is a POSIX ERE.
+
 Get basic information about a package:
 
     apt-cache show $PKG
