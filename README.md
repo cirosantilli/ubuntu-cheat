@@ -13,6 +13,7 @@ See <https://github.com/cirosantilli/linux-cheat> for concepts that apply to mos
     1.  [Package naming conventions](package-package-versions.md)
     1.  [Package versions](package-versions.md)
     1.  [Metapackages](sources.md)
+    1.  [bzr](bzr.md)
 1.  [install.sh](install.sh): installation procedures for tons of programs
     1. [deb](deb.md)
     1. [apt-get.md](apt-get.md)

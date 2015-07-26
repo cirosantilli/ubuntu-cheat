@@ -82,7 +82,9 @@ if [ "$level" = 'cli' ]; then exit 0; fi
 
   # Editor
 
-    sudo aptitude install -y vim-gtk
+    sudo aptitude install -y vim-gnome
+    # http://askubuntu.com/questions/33260/difference-between-vim-gtk-and-vim-gnome
+    #sudo aptitude install -y vim-gtk
 
   ## File manager
 
@@ -219,6 +221,10 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     ## Ubuntu specific
 
         sudo aptitude install -y debootstrap
+
+    sudo add-apt-repository ppa:danielrichter2007/grub-customizer
+    sudo apt-get update
+    sudo apt-get install grub-customizer
 
 ## Printer
 
@@ -550,6 +556,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y automake
     sudo aptitude install -y bison
     sudo aptitude install -y build-essential
+    sudo aptitude install -y cloc
     sudo aptitude install -y cmake
     sudo aptitude install -y cscope
     sudo aptitude install -y doxygen
@@ -559,6 +566,14 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y g++
     sudo aptitude install -y libtool
     sudo aptitude install -y m4
+    sudo aptitude install -y sloccount
+
+  ## Profiling
+
+      sudo aptitude install -y valgrind
+      sudo aptitude install -y kcachegrind
+      # perf
+      sudo aptitude install -y linux-tools-common linux-tools-generic
 
   ## Version control
 
@@ -576,11 +591,14 @@ if [ "$level" = 'gui' ]; then exit 0; fi
       sudo aptutide install -y mercurial
       sudo aptitude install -y subversion
 
-  ## C and C++ gcc g++
+  ## C C++ gcc g++
 
     # gcc docs:
 
       sudo aptitude install -y gcc-doc
+
+      # man std::thread
+      sudo aptitude install -y libstdc++-4.8-doc
 
     # Installed at: `/usr/share/doc/gcc-doc`
 
@@ -1010,7 +1028,8 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     # Tor:
 
-      sudo add-apt-repository ppa:webupd8team/tor-browser
+      #sudo add-apt-repository ppa:webupd8team/tor-browser
+      sudo add-apt-repository ppa:upubuntu-com/tor64
       sudo apt-get update
       sudo apt-get install tor-browser
 

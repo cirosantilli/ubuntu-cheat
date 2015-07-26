@@ -20,7 +20,28 @@ Or you can download archives directly form the server by browsing:
 
 E.g.:
 
-    http://archive.ubuntu.com/ubuntu/pool/main/h/vim/
+    http://archive.ubuntu.com/ubuntu/pool/main/v/vim/
+
+Some of the files that it contains:
+
+    vim-common_7.2.330-1ubuntu3.1_amd64.deb 2012-11-15 01:04    171K
+    vim-common_7.2.330-1ubuntu3.1_i386.deb  2012-11-15 01:04    169K
+    vim-common_7.2.330-1ubuntu3_amd64.deb   2010-04-16 14:05    171K
+    vim-common_7.2.330-1ubuntu3_i386.deb    2010-04-16 13:05    170K
+    vim-common_7.3.429-2ubuntu2.1_amd64.deb 2012-05-04 05:06    84K
+    vim-common_7.3.429-2ubuntu2.1_i386.deb  2012-05-04 05:07    84K
+    vim-common_7.3.429-2ubuntu2_amd64.deb   2012-03-12 07:04    85K
+
+    ...
+
+    vim-dbg_7.2.330-1ubuntu3.1_amd64.deb    2012-11-15 01:04    7.0M
+    vim-dbg_7.2.330-1ubuntu3.1_i386.deb     2012-11-15 01:04    7.0M
+
+    ...
+
+Note how many related Vim packages are in that directory.
+
+That directory contains debs for all Ubuntu versions.
 
 ### hello package
 
@@ -38,32 +59,6 @@ Outputs:
 It is a compiled C program.
 
 Not really minimal, but covers all basic features minimally, including manpages.
-
-## File name
-
-Format:
-
-    <name>_<version>-<ubuntu-version>_<architecture>.deb
-
-Sample:
-
-    hello_2.8-4_amd64.deb
-    ^^^^^ ^^^ ^ ^^^^^
-    1     2   3 4
-
-1.  unique package name
-
-2.  version
-
-3.  TODO. Mentioned at: <https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version>
-
-    I think this is increased by 1 every time the package changes.
-
-4.  architecture. Common values:
-
-    - `all`
-    - `i386`
-    - `amd64`
 
 ## Open a deb
 

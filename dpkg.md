@@ -39,7 +39,7 @@ Does not extract control files.
 
 List files in installed package:
 
-    dpkg -L mysql | sort
+    dpkg -L hello | sort
 
 Sample output:
 
@@ -70,3 +70,9 @@ Sample output:
     linux-image-3.13.0-37-generic: /boot/vmlinuz-3.13.0-37-generic
 
 For packages that are not installed, consider `apt-file search`.
+
+## p
+
+Show full package description:
+
+    dpkg -p hello

@@ -10,6 +10,19 @@ One in every four releases is marked Long Term Support LTS and receives official
 
 For your sanity: only use LTS releases. If a problem is corrected in a future version, and there is a workaround, use the workaround. 6 months is too short a time interval for stability, and all server software should run on LTS, so you can reproduce production more easily.
 
+## Server releases
+
+There are two versions of the Ubuntu ISO:
+
+- desktop
+- server
+
+The main difference is that the server version does not contain any GUI applications, and has some additional networking software pre-installed.
+
+The actual packages however are the same for both: <http://askubuntu.com/questions/53822/how-do-you-run-ubuntu-server-with-a-gui> with some `atpt-get`-fu you can transform a server release into a desktop release and vice versa.
+
+As of 14.04, the server release was half the size of the desktop release, making it a good potential candidate for virtual machine emulation.
+
 ## Get current Ubuntu version
 
     lsb_release -a | grep Release
