@@ -75,13 +75,13 @@ Install package
 
     sudo aptitude install $PKG
 
-Also installs recommended packages
+Also install recommended packages:
 
     sudo aptitude install -o APT::Install-Recommends="true" $PKGg
 
     -o option changes things which could be in the config files.
 
-Also installs suggested packages
+Also install suggested packages:
 
     sudo aptitude install -o APT::Install-Suggests="true" $PKGg
 

@@ -76,3 +76,25 @@ For packages that are not installed, consider `apt-file search`.
 Show full package description:
 
     dpkg -p hello
+
+Sample output:
+
+    Package: hello
+    Priority: optional
+    Section: devel
+    Installed-Size: 108
+    Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+    Architecture: amd64
+    Version: 2.8-4
+    Depends: libc6 (>= 2.14), dpkg (>= 1.15.4) | install-info
+    Size: 28148
+    Description: The classic greeting, and a good example
+     The GNU hello program produces a familiar, friendly greeting.  It
+     allows non-programmers to use a classic computer science tool which
+     would otherwise be unavailable to them.
+     .
+     Seriously, though: this is an example of how to do a Debian package.
+     It is the Debian version of the GNU Project's `hello world' program
+     (which is itself an example for the GNU Project).
+    Original-Maintainer: Santiago Vila <sanvila@debian.org>
+    Homepage: http://www.gnu.org/software/hello/

@@ -555,6 +555,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y ant
     sudo aptitude install -y automake
     sudo aptitude install -y bison
+    # Meta package with GCC and Make.
     sudo aptitude install -y build-essential
     sudo aptitude install -y cloc
     sudo aptitude install -y cmake
@@ -565,6 +566,8 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y flex
     sudo aptitude install -y g++
     sudo aptitude install -y libtool
+    sudo aptitude install -y make
+    sudo aptitude install -y make-doc
     sudo aptitude install -y m4
     sudo aptitude install -y sloccount
 
@@ -810,13 +813,15 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   ## Go
 
+    # GVM: https://github.com/moovweb/gvm
+
       # Requires: mercurial, bison.
       if [ ! -f "$HOME/.gvm/scripts/gvm" ]; then
         bash < <(curl -LSs 'https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer')
       fi
       . "$HOME/.gvm/scripts/gvm"
-      gvm install 'go1.2.2'
-      gvm use 'go1.2.2' --default
+      gvm install 'go1.4'
+      gvm use 'go1.4' --default
 
   ## Lua
 
@@ -841,7 +846,9 @@ if [ "$level" = 'gui' ]; then exit 0; fi
       cd '..'
       rm -rf -- "$dir"
 
-  ## Virtualization ##VM
+  ## Virtualization
+
+  ## VM
 
     # MANUAL: don't forget to enable virtualization on your BIOS when using virtualization tools.
     # Some features may only be available with it enabled.
@@ -869,7 +876,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
           #sudo aptitude install -y vagrant
 
-    ## docker
+    ## Docker
 
       # Only exists for 64 bit, not 32.
       # Instructions at: http://docs.docker.io/en/latest/installation/ubuntulinux/
@@ -892,17 +899,18 @@ if [ "$level" = 'gui' ]; then exit 0; fi
           sudo apt-get update
           sudo aptitude install -y jenkins
 
-    ## wine
+      # wine
+      sudo add-apt-repository ppa:ubuntu-wine/ppa
+      sudo aptitudeapt-get update
+      sudo aptitude install -y wine1.7
+      sudo aptitude install -y winetricks
+      winetricks winxp d3dx9 vcrun2005 vcrun2008 wininet corefonts
 
-        sudo add-apt-repository ppa:ubuntu-wine/ppa
-        sudo aptitudeapt-get update
-        sudo aptitude install -y wine1.7
-        sudo aptitude install -y winetricks
-        winetricks winxp d3dx9 vcrun2005 vcrun2008 wininet corefonts
-
-    # play on linux:
-
-        sudo aptitude install -y playonlinux
+      sudo aptitude install -y bochs
+      sudo aptitude install -y playonlinux
+      sudo aptitude install -y qemu
+      sudo aptitude install -y qemu
+      sudo aptitude install -y qemu-user
 
   ## perl
 
