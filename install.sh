@@ -1,14 +1,20 @@
-#!/usr/bin/env bash
+!/usr/bin/env bash
+
+set -x
 
 # Do all automatable steps to install useful stuff in Ubuntu.
 
 # Install the CLI survival kit:
 
-  #wget -O- https://raw.githubusercontent.com/cirosantilli/ubuntu-cheat/master/install.sh | bash -s cli
+  # wget -O- https://raw.githubusercontent.com/cirosantilli/ubuntu-cheat/master/install.sh | bash -s cli
 
-# install GUI survival kit:
+# Install GUI survival kit:
 
-  #wget -O- https://raw.githubusercontent.com/cirosantilli/ubuntu-cheat/master/install.sh
+  # wget -O- https://raw.githubusercontent.com/cirosantilli/ubuntu-cheat/master/install.sh
+
+#
+
+  # wget -O- https://raw.githubusercontent.com/cirosantilli/ubuntu-cheat/master/install.sh
 
 # Non-automatable steps will be labelled with: `MANUAL`.
 # All effort is made to make them automatable.
@@ -19,6 +25,10 @@ if [ "$#" -gt 0 ]; then
 else
   level='gui'
 fi
+
+# True if your home directory is not yet ready,
+# which often happens as a result of having a home partition setup.
+no_home_partition=true
 
 ## CLI survival kit
 
@@ -32,27 +42,55 @@ fi
 
     sudo aptitude install -y git
     sudo aptitude install -y curl
-    mkdir ~/bin
-    cd ~/bin
-    curl -O https://raw.github.com/git/git/master/contrib/diff-highlight/diff-highlight
-    chmod +x diff-highlight
+    if $no_home_partition; then
+      mkdir ~/bin
+      cd ~/bin
+      curl -O https://raw.github.com/git/git/master/contrib/diff-highlight/diff-highlight
+      chmod +x diff-highlight
+    fi
 
   # Dotfiles: only if not a shared home directory.
 
     sudo gem install homesick
-    homesick clone cirosantilli/dotfiles
-    homsick symlink
+    if $no_home_partition; then
+      homesick clone cirosantilli/dotfiles
+      homsick symlink
+    fi
 
-  # Vim plugins
+  # Vim and plugins
 
     sudo aptitude install -y vim
-    git clone https://github.com/gmarik/Vundle.vim "$HOME/.vim/bundle/Vundle"
-    # TODO fails from bash pipe becuase not TTY.
-    #vim +PluginInstall +qall
+    if $no_home_partition; then
+      git clone https://github.com/gmarik/Vundle.vim "$HOME/.vim/bundle/Vundle"
+      # TODO fails from bash pipe becuase not TTY.
+      # http://stackoverflow.com/questions/23322744/vim-run-commands-from-bash-script-and-exit-without-leaving-shell-in-a-bad-state
+      #vim +PluginInstall +qall
+    fi
 
 if [ "$level" = 'cli' ]; then exit 0; fi
 
 ## GUI survival kit
+
+  # Terminal
+
+    sudo aptitude install -y guake
+
+  ## File manager
+
+    ## Krusader
+
+      sudo aptitude install -y krusader
+      # Needed to manage bookmarks,
+      # otherwise button does nothing:
+      # https://bugs.launchpad.net/ubuntu/+source/krusader/+bug/999695
+      sudo aptitude install -y kde-baseapps-bin
+      #sudo aptitude install -y konqueror
+      # Terminal emulator. UPDATE Ubuntu 15.10: not needed, installed with Krusader.
+      sudo aptitude install -y konsole
+      # Help
+      #sudo aptitude install -y khelpcenter4
+      # Password manager
+      sudo aptitude install -y kwalletmanager
 
   ## Package management
 
@@ -65,43 +103,27 @@ if [ "$level" = 'cli' ]; then exit 0; fi
       apt-file update
       sudo aptitude install -y ppa-purge
       # Automatically run upgrades without confirmation.
-      # TODO automatically accept ncurses confirmation
+      # MANUAl accept ncurses confirmation
       sudo dpkg-reconfigure unattended-upgrades
-      # Usefull stuff that does not come by default or Canonical would have to pay royalties:
+      # Usefull stuff that does not come by default or Canonical would have to pay royalties.
+      # MANUAL accept ncurses confirmation
       sudo aptitude install -y ubuntu-restricted-extras
 
   # GTK theme
 
-    sudo add-apt-repository ppa:noobslab/themes
+    # TODO not working on 15.10.
+    sudo add-apt-repository -y ppa:noobslab/themes
     sudo apt-get update
-    sudo apt-get install gnomishdark
+    sudo apt-get install -y gnomishdark
 
-  # Terminal
-
-    sudo aptitude install -y guake
+    # Best I've found so far, but not dark enough for me:
+    sudo apt-get install -y numix
 
   # Editor
 
     sudo aptitude install -y vim-gnome
     # http://askubuntu.com/questions/33260/difference-between-vim-gtk-and-vim-gnome
     #sudo aptitude install -y vim-gtk
-
-  ## File manager
-
-    ## Krusader
-
-      sudo aptitude install -y krusader
-      # Needed to manage bookmarks,
-      # otherwise button does nothing:
-      # https://bugs.launchpad.net/ubuntu/+source/krusader/+bug/999695
-      sudo aptitude install -y kde-baseapps-bin
-      #sudo aptitude install -y konqueror
-      # Terminal emulator
-      sudo aptitude install -y konsole
-      # Help
-      #sudo aptitude install -y khelpcenter4
-      # Password manager
-      sudo aptitude install -y kwalletmanager
 
   ## Browser
 
@@ -139,6 +161,8 @@ if [ "$level" = 'cli' ]; then exit 0; fi
   # X
 
     sudo aptitude install -y xsel
+    # While xsel is broken.
+    sudo aptitude install -y xclip
     sudo aptitude install -y wmctrl
 
   # Media:
@@ -151,24 +175,29 @@ if [ "$level" = 'cli' ]; then exit 0; fi
 
     # sudo without password:
 
-      #sudo sh -c "echo '$(id -un) ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
+      # sudo sh -c "echo '$(id -un) ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
 
     # Quick OS system choice and show kernel messages:
 
-      #sudo sh -c "printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=""\n'" >> /etc/default/grup"
-      #sudo update-grub
+      # printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=""\n' | sudo tee -a /etc/default/grub
+      # sudo update-grub
 
-    # Autohide launcher:
+    if $no_home_partition; then
 
-      # http://askubuntu.com/questions/9865/how-can-i-configure-unitys-launcher-auto-hide-behavior
+      # Autohide launcher:
 
-    # Change esc and caps lock
-    # <http://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc>
+        # http://askubuntu.com/questions/9865/how-can-i-configure-unitys-launcher-auto-hide-behavior
 
-      sudo apt-get install -y dconf-tools
-      dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+      # Change esc and caps lock
+      # TODO ~/.Xmodmap seems to be working?
+      # http://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc
 
-    # MANUAL:
+        # sudo apt-get install -y dconf-tools
+        # dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
+
+    fi
+
+    # MANUAL
     # Make the scrollbar more visible:
     # http://askubuntu.com/questions/103246/how-to-change-the-color-of-the-scroll-bar
     # https://bugs.launchpad.net/ubuntu/+source/guake/+bug/1370762
@@ -228,19 +257,32 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
 ## Printer
 
-  # MANUAL
+  ## EPSON
 
-  # Tested for: EPSON xp-202.
+    # MANUAL
 
-  # Type `printer` in dash.
+    # Tested for: EPSON xp-202.
 
-  # The guide shows you everything.
+    # Type `printer` in dash.
+
+    # The guide shows you everything.
+
+    # BUG: http://askubuntu.com/questions/415099/13-10-network-epson-printer-stuck-on-installing
+
+  ## HP
+
+    sudo aptitude install -y hplip-gui
+
+  ## xsane
+
+    sudo aptitude install -y xsane
 
 ## Book
 
+  sudo aptitude install -y calibre
   sudo aptitude install -y okular okular-extra-backends
-  #sudo aptitude install -y fbreader
-  #sudo aptitude install -y calibre
+  # RTF format.
+  sudo aptitude install -y fbreader
 
   sudo aptitude install -y pdftk
   sudo aptitude install -y djvulibre-bin
@@ -442,11 +484,15 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     # Non Launchapd ppa with lots of good games.
 
       wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
-      # REPLACE precise with the codename for your distro!
-      sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu precise-getdeb games" > /etc/apt/sources.list.d/getdeb.list'
+      sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu '"$(lsb_release -cs)"'-getdeb apps games" > /etc/apt/sources.list.d/getdeb.list'
       sudo aptitude update
       sudo aptitude install urbanterror
       #sudo aptitude install worldofpadman
+
+      # Portuguese.
+      wget -q -O - 'http://archive.ubuntugames.org/ubuntugames.key' | sudo apt-key add -
+      sudo add-apt-repository "deb http://archive.ubuntugames.org ubuntugames main"
+      sudo apt-get update
 
   sudo aptitude install -y nethack-console
   sudo aptitude install -y fortune
@@ -459,6 +505,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
   #sudo aptitude install -y urban-terror
   #sudo aptitude install -y golly
   #sudo aptitude install -y gnotski
+  sudo aptitude install -y steam
 
   # super maryo chronicles:
 
@@ -560,10 +607,14 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y cloc
     sudo aptitude install -y cmake
     sudo aptitude install -y cscope
+    sudo aptitude install -y dwarfdump
+    sudo aptitude install -y dpkg-dev
     sudo aptitude install -y doxygen
     sudo aptitude install -y doxygen-doc
     sudo aptitude install -y exuberant-ctags
     sudo aptitude install -y flex
+    # To compile 32-bit executables.
+    sudo aptitude install -y gcc-multilib
     sudo aptitude install -y g++
     sudo aptitude install -y libtool
     sudo aptitude install -y make
@@ -731,25 +782,38 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
         sudo aptitude install -y maven
 
-
       # Maven 2:
 
         sudo aptitude install -y maven2
 
     ##icedtea
 
-      # Openjdk version + firefox plugin.
+      # Openjdk version + firefox plugin. Necessary to run Java in browser.
 
-      # TODO necessary in 14.04?
-
-        sudo aptitude install openjdk-7-jre
         sudo aptitude install icedtea-7-plugin
+
+    ## clojure
+
+      # Boot
+
+        wget https://github.com/boot-clj/boot/releases/download/2.2.0/boot.sh
+        mv boot.sh boot && chmod a+x boot && sudo mv boot /usr/local/bin
 
   ## Python
 
-    # pip:
+    # pip latest version:
 
       wget -O- 'https://bootstrap.pypa.io/get-pip.py' | sudo python
+
+    # Or:
+
+      sudo aptitude install -y python-pip
+      sudo pip install --upgrade pip
+
+    # Scipy: http://stackoverflow.com/questions/26575587/cant-install-scipy-through-pip
+
+      sudo apt-get install build-essential libatlas-base-dev gfortran python-pip python-dev
+      sudo pip install numpy scipy
 
     sudo aptitude install -y gunicorn
 
@@ -782,7 +846,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     # NVM install:
 
-      VERSION='0.10.26'
+      VERSION='5.3.0'
       curl 'https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh' | sh
       # WARNING: fails with `-eu`.
       . "$HOME/.nvm/nvm.sh"
@@ -810,6 +874,10 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     # After install, configure with:
 
       npm config set registry 'http://registry.npmjs.org/'
+
+  ## R
+
+      sudo aptitude install -y r-base-core
 
   ## Go
 
@@ -907,8 +975,8 @@ if [ "$level" = 'gui' ]; then exit 0; fi
       winetricks winxp d3dx9 vcrun2005 vcrun2008 wininet corefonts
 
       sudo aptitude install -y bochs
+      sudo aptitude install -y bochs-x
       sudo aptitude install -y playonlinux
-      sudo aptitude install -y qemu
       sudo aptitude install -y qemu
       sudo aptitude install -y qemu-user
 
@@ -948,11 +1016,15 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
     sudo aptitude install -y nasm
 
-## Net
+## Network
 
     sudo aptitude install -y apache2
+    # Adds new connection type OpenVPN option
+    # to the network-manager interface.
+    sudo aptitude install -y netwrk-manager-openvpn-gnome
     sudo aptitude install -y libapache2-mod-fastcgi
 
+    sudo aptitude install -y mongodb
     sudo aptitude install -y mongodb-client
     sudo aptitude install -y mongodb-server
 
@@ -973,15 +1045,22 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y whois
     sudo aptitude install -y wireshark
 
+  ## casperjs
+
+    # Install NVM.
+    npm install -g casperjs
+    sudo apt-get install phantomjs
+
   ## PHP
+
+    # Install PHP, and dependencies like Apache:
 
       sudo aptitude install -y php5
 
     # php Apache module:
 
-      sudo aptitude install -y libapache2-mod-php5
-        #Will ask you to initialize the password for the `root` user.
-      sudo aptitude install -y sqlite
+      #sudo aptitude install -y libapache2-mod-php5
+      # MANUAL: will ask you to initialize the password for the `root` user.
 
   ## phpmyadmin
 
@@ -1046,6 +1125,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     # MySQL:
 
       sudo aptitude install -y mysql-server
+      sudo aptitude install -y sqlite
 
     ## remove mysql
 
@@ -1243,12 +1323,21 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
   # To install drivers, consider using the "Additional drivers" GUI.
 
+    sudo apt-get install glmark2
+    sudo apt-get install phoronix-test-suite
+
   ## Nvidia
 
-    sudo aptitude install -y nvidia-319
-    sudo aptitude install -y nvidia-settings-319
-    sudo aptitude install -y nvidia-prime
-    sudo aptitude install -y nvidia-opencl-dev
+    # Ubuntu 15.10:
+
+      sudo aptitude install -y nvidia-prime
+      sudo aptitude install -y nvidia-352
+      sudo aptitude install -y nvidia-352-dev
+
+      # Do NOT install this! Do and apt-cache
+      # search nvidia and get the latest one instead.
+      # Or use the additional drivers GUI.
+      #sudo aptitude install -y nvidia-current
 
   ## ATI
 

@@ -13,7 +13,7 @@ Launchpad <https://launchpad.net> is the main source for PPAs and the site is ma
 
 Next Google it.
 
-## List PPAs
+## List added PPAs
 
 Default sources:
 
@@ -22,6 +22,14 @@ Default sources:
 PPAs:
 
     ls -1 /etc/apt/sources.list.d/
+
+## List packages from a PPA
+
+- <http://askubuntu.com/questions/5976/how-can-i-list-all-packages-ive-installed-from-a-particular-ppa>
+- <http://askubuntu.com/questions/447129/how-to-list-all-the-packages-which-are-installed-from-ppas>
+- <http://askubuntu.com/questions/5976/how-can-i-list-all-packages-ive-installed-from-a-particular-ppa>
+
+Not as easy as it should be.
 
 ## Keys
 

@@ -34,3 +34,4 @@ See <https://github.com/cirosantilli/linux-cheat> for concepts that apply to mos
 
 1. [debconf](debconf.md)
 1. [debuild](debuild.md)
+1. [ubiquity](ubiquity.md)

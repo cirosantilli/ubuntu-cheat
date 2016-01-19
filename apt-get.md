@@ -152,13 +152,15 @@ Great when you are going to compile it from source to get the latest version.
 
 Download the source version to the current directory:
 
+    sudo apt-get install dpkg-dev
+
     pkg='liblapack-dev'
     apt-get source "$pkg"
     sudo apt-get build-dep "$pkg"
     cd "$pkg"*
     debuild -us -uc
 
-It is also possible to fetch the sources with 
+It is also possible to fetch the sources with `bzr`, which also allows you to see the evolution of the package, and contribute back to it.
 
 ## Combos
 
@@ -174,3 +176,11 @@ To correct dependency problems try:
     suto apt-get install $PKG
     Also, if the package comes from a ppa, remove the ppa and try again
     Sources list. does not include ppas
+
+## q
+
+## qq
+
+Produce less verbose output, better easier to log.
+
+Recommended by Travis CI.

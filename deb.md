@@ -64,11 +64,11 @@ Not really minimal, but covers all basic features minimally, including manpages.
 
 The most direct way to do it is via `ar`:
 
-    ar xf *.deb
+    ar xf hello_2.8-4_amd64.deb
 
 A higher level view can be obtained with:
 
-    dpkg-deb -R *.deb
+    dpkg-deb -R hello_2.8-4_amd64.deb hello_2.8-4_amd64/
 
 which also unpacks the internal archives.
 
@@ -193,6 +193,10 @@ List under:
     cat /usr/share/doc/build-essential/list
 
 As documented at <https://www.debian.org/doc/debian-policy/ch-source.html#s-pkg-relations>
+
+## How to deal with executable name conflicts
+
+Use a post install script that runs `update-alternatives`: <http://askubuntu.com/a/667227/52975>
 
 ## Bibliography
 
