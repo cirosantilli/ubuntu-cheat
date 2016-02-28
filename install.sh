@@ -19,6 +19,18 @@ set -x
 # Non-automatable steps will be labelled with: `MANUAL`.
 # All effort is made to make them automatable.
 
+## USERNAME CHANGE
+
+  # Denotes steps break if you change your username.
+
+  # MANUAL: ~/bin/ manually installed programs may break because they encode paths on username. This is the case for Git!
+
+  # MANUAL: firefox download directory
+
+## SECURITY
+
+  # Steps that may affect system security.
+
 if [ "$#" -gt 0 ]; then
   level="$1"
   shift
@@ -54,18 +66,32 @@ no_home_partition=true
     sudo gem install homesick
     if $no_home_partition; then
       homesick clone cirosantilli/dotfiles
-      homsick symlink
+      # USERNAME CHANGE
+      homesick symlink
     fi
 
   # Vim and plugins
 
     sudo aptitude install -y vim
+    # On path dependencies because of some packages.
+    # If not installed, Vim keeps complaining that they are missing.
+      sudo aptitude install -y cscope
+      sudo aptitude install -y exuberant-ctags
     if $no_home_partition; then
       git clone https://github.com/gmarik/Vundle.vim "$HOME/.vim/bundle/Vundle"
       # TODO fails from bash pipe becuase not TTY.
       # http://stackoverflow.com/questions/23322744/vim-run-commands-from-bash-script-and-exit-without-leaving-shell-in-a-bad-state
       #vim +PluginInstall +qall
     fi
+
+  ## MANUAL
+
+    # Take home files from old computer into new one.
+    # Connect both computers to a local network.
+    # Go to old computer, and do ifconfig. Note the IP.
+    # IP='192.168.49.73'
+    # cd
+    # rsync -azv ciro@$IP:/home/OLD_USERNAME/folder .
 
 if [ "$level" = 'cli' ]; then exit 0; fi
 
@@ -149,6 +175,8 @@ if [ "$level" = 'cli' ]; then exit 0; fi
 
     # Skype. Source: partner.
 
+      # TODO may be required: http://askubuntu.com/questions/506259/skype-shows-virtual-device-for-microphone-speakers-and-ringing
+      # libpulse0:i386
       sudo aptitude install -y skype
 
     # Google talk.
@@ -160,10 +188,10 @@ if [ "$level" = 'cli' ]; then exit 0; fi
 
   # X
 
+    sudo aptitude install -y wmctrl
     sudo aptitude install -y xsel
     # While xsel is broken.
     sudo aptitude install -y xclip
-    sudo aptitude install -y wmctrl
 
   # Media:
 
@@ -173,36 +201,47 @@ if [ "$level" = 'cli' ]; then exit 0; fi
 
     # Fundamental system configurations.
 
-    # sudo without password:
+    ## MANUAL
 
-      # sudo sh -c "echo '$(id -un) ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
+      # SECURITY sudo without password:
 
-    # Quick OS system choice and show kernel messages:
+        # sudo sh -c "echo '$(id -un) ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
 
-      # printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=""\n' | sudo tee -a /etc/default/grub
-      # sudo update-grub
+      # Quick OS system choice and show kernel messages:
 
-    if $no_home_partition; then
+        # printf 'GRUB_TIMEOUT=1\nGRUB_CMDLINE_LINUX_DEFAULT=""\n' | sudo tee -a /etc/default/grub
+        # sudo update-grub
 
       # Autohide launcher:
 
+        # Appearance.
         # http://askubuntu.com/questions/9865/how-can-i-configure-unitys-launcher-auto-hide-behavior
 
+      # Setup locked app icons.
+
+      # Set date and weekday on dashboard clock.
+
+      # Setup keybindings: http://askubuntu.com/questions/26056/where-are-gnome-keyboard-shortcuts-stored
+
+      # Enable US international input.
+
+      # Enable Chinese input.
+      # Super > Language Support > Install Chinese.
+      # Logout.
+      # Super > Text Entry > Chinese Pinyin.
+
+      # Make the scrollbar more visible:
+      # TODO Solved in 15.10?
+      # http://askubuntu.com/questions/103246/how-to-change-the-color-of-the-scroll-bar
+      # https://bugs.launchpad.net/ubuntu/+source/guake/+bug/1370762
+
+        # sudo aptitude install -y gnome-color-chooser
+
       # Change esc and caps lock
-      # TODO ~/.Xmodmap seems to be working?
+      # TODO solved in 15.10? ~/.Xmodmap seems to be working in 15.10 thus automating this?
       # http://askubuntu.com/questions/363346/how-to-permanently-switch-caps-lock-and-esc
-
-        # sudo apt-get install -y dconf-tools
-        # dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
-
-    fi
-
-    # MANUAL
-    # Make the scrollbar more visible:
-    # http://askubuntu.com/questions/103246/how-to-change-the-color-of-the-scroll-bar
-    # https://bugs.launchpad.net/ubuntu/+source/guake/+bug/1370762
-
-      sudo aptitude install -y gnome-color-chooser
+      # sudo apt-get install -y dconf-tools
+      # dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:escape']"
 
 if [ "$level" = 'gui' ]; then exit 0; fi
 
@@ -486,8 +525,8 @@ if [ "$level" = 'gui' ]; then exit 0; fi
       wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
       sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu '"$(lsb_release -cs)"'-getdeb apps games" > /etc/apt/sources.list.d/getdeb.list'
       sudo aptitude update
-      sudo aptitude install urbanterror
-      #sudo aptitude install worldofpadman
+      sudo aptitude install -y urbanterror
+      #sudo aptitude install -y worldofpadman
 
       # Portuguese.
       wget -q -O - 'http://archive.ubuntugames.org/ubuntugames.key' | sudo apt-key add -
@@ -606,12 +645,10 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y build-essential
     sudo aptitude install -y cloc
     sudo aptitude install -y cmake
-    sudo aptitude install -y cscope
     sudo aptitude install -y dwarfdump
     sudo aptitude install -y dpkg-dev
     sudo aptitude install -y doxygen
     sudo aptitude install -y doxygen-doc
-    sudo aptitude install -y exuberant-ctags
     sudo aptitude install -y flex
     # To compile 32-bit executables.
     sudo aptitude install -y gcc-multilib
@@ -786,7 +823,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
         sudo aptitude install -y maven2
 
-    ##icedtea
+    ## icedtea
 
       # Openjdk version + firefox plugin. Necessary to run Java in browser.
 
@@ -818,6 +855,10 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y gunicorn
 
   ## Ruby
+
+    # To compile C extensions, required by some gem packages.
+
+      sudo apt-get ruby-dev
 
     # Old install: still outdated on the README.
 
@@ -1185,7 +1226,6 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       sudo aptitude install -y wmctrl
       sudo aptitude install -y xbacklight
-      sudo aptitude install -y xclip
       sudo aptitude install -y xdotool
 
       sudo apt-add-repository ppa:cdekter/ppa

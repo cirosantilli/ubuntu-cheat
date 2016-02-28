@@ -34,7 +34,7 @@ Reason: on remove aptitude removes all dependencies which were not installed exp
 
 Synaptic has a GUI interface, but less options.
 
-Aptitude seems to be more powerful than apt-get
+Aptitude seems to be more powerful than apt-get. E.g. on 15.10: <http://askubuntu.com/questions/363200/e-unable-to-correct-problems-you-have-held-broken-packages/451078#451078>
 
 ## aptitude
 
@@ -57,7 +57,7 @@ Add line:
 
 ### update
 
-Looks for possible updgrades on known sources, but does not install them:
+Looks for possible upgrades on known sources, but does not install them:
 
 	sudo aptitude update
 
