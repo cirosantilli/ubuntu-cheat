@@ -631,6 +631,8 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y yakuake
 
     sudo aptitutde install -y tmux
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    # MANUAL Prefix + I (upper case i) to install them.
 
     sudo add-apt-repository -y ppa:finalterm/daily
     sudo aptitude update
@@ -711,16 +713,16 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
         sudo aptitude install -y libboost-all-dev
 
-    # Blas C / Fotran and lapack fortran:
+    ## Blas C / Fotran and lapack fortran:
 
       sudo aptitude install -y liblapack-dev
 
-    # Lapack C via LAPACKE:
+      # Lapack C via LAPACKE:
 
-      #sudo aptitude install -y liblapacke-dev
+        #sudo aptitude install -y liblapacke-dev
 
-      sudo aptitude install -y libgsl0-dev
-      sudo aptitude install -y gsl-doc-info
+        sudo aptitude install -y libgsl0-dev
+        sudo aptitude install -y gsl-doc-info
 
     # glx utils:
 
@@ -774,6 +776,8 @@ if [ "$level" = 'gui' ]; then exit 0; fi
         sudo aptitude install -y linux-source linux-headers
         #sudo aptitude install -y check
         sudo aptitude install -y libncurses5-dev
+
+      sudo aptitude install -y libbullet-dev libbullet-doc libbullet-extras-dev
 
   ## Java
 
@@ -1216,6 +1220,9 @@ if [ "$level" = 'gui' ]; then exit 0; fi
   ## Mail
 
       sudo aptitude install -y mutt
+      mkdir -p ~/.mutt/cache/bodies
+      mkdir -p ~/.mutt/cache/headers
+      touch ~/.mutt/certificates
       sudo aptitude install -y ssmtp
 
     # Conflicts with ssmtp:
@@ -1245,10 +1252,16 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     sudo aptitude install -y alarm-clock-applet
     # GNOME tweak tool:
     sudo aptitude install -y gconf-editor
-    sudo aptitude install -y logkeys
-    sudo aptitude install -y recordmydesktop
-    sudo aptitude install -y gtk-recordmydesktop
-    sudo aptitude install -y guvcview
+
+    ## Capture desktop
+
+      # http://askubuntu.com/questions/4428/how-to-create-a-screencast
+      sudo aptitude install -y logkeys
+      # Good UI, only exports to mp4.
+      sudo aptitude install -y kazam
+      sudo aptitude install -y recordmydesktop
+      sudo aptitude install -y gtk-recordmydesktop
+      sudo aptitude install -y guvcview
 
     # ibus input methods for QT:
     sudo aptitude install -y ibus-qt4

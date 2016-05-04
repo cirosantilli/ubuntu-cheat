@@ -16,7 +16,7 @@ See <https://github.com/cirosantilli/linux-cheat> for concepts that apply to mos
     1.  [bzr](bzr.md)
 1.  [install.sh](install.sh): installation procedures for tons of programs
     1. [deb](deb.md)
-    1. [apt-get.md](apt-get.md)
+    1. [apt-get](apt-get.md)
     1. [apt-file](apt-file.md)
     1. [dpkg](dpkg.md)
     1. [apt-cache](apt-cache.md)
