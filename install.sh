@@ -526,7 +526,7 @@ if [ "$level" = 'gui' ]; then exit 0; fi
       sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu '"$(lsb_release -cs)"'-getdeb apps games" > /etc/apt/sources.list.d/getdeb.list'
       sudo aptitude update
       sudo aptitude install -y urbanterror
-      #sudo aptitude install -y worldofpadman
+      sudo aptitude install -y worldofpadman
 
       # Portuguese.
       wget -q -O - 'http://archive.ubuntugames.org/ubuntugames.key' | sudo apt-key add -
@@ -850,6 +850,12 @@ if [ "$level" = 'gui' ]; then exit 0; fi
 
       sudo aptitude install -y python-pip
       sudo pip install --upgrade pip
+
+    # Virtualenv
+
+      sudo pip install --upgrade virtualenv
+      virtualenv -p python3.5 .env
+      . .env/bin/activate
 
     # Scipy: http://stackoverflow.com/questions/26575587/cant-install-scipy-through-pip
 
@@ -1413,3 +1419,11 @@ if [ "$level" = 'gui' ]; then exit 0; fi
     # Google Compute Engine gcutil
 
       curl https://dl.google.com/dl/cloudsdk/release/install_google_cloud_sdk.bash | bash
+
+    # Google Cloud Storage Engine gcutil
+    # gsutil
+
+      curl https://sdk.cloud.google.com | bash
+      # Start new shell.
+      gcloud init
+      gauth cloud login

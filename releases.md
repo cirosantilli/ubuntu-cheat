@@ -29,6 +29,18 @@ As of 14.04, the server release was half the size of the desktop release, making
 
 ## Upgrade Ubuntu to newer version
 
+Don't forget: release upgrading is serious stuff.
+
+If you stop in the middle, you risk losing the system.
+
+Home partitions are highly recommended.
+
+<http://askubuntu.com/questions/110477/how-do-i-upgrade-to-a-newer-version-of-ubuntu>
+
+CLI method:
+
     sudo aptitude install -y update-manager-core
     sudo do-release-upgrade
     sudo aptitude update && sudo aptitude upgrade
+
+How releases actually work internally, and why you can continue to use the computer while it upgrades: <http://askubuntu.com/questions/34605/how-does-the-ubuntu-upgrade-process-work>
